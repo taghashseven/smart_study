@@ -1,4 +1,10 @@
 import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
+
+// Fix __dirname in ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -23,15 +29,6 @@ app.get('/api/physics/topics', (req, res) => {
     res.json({ topics });
 });
 
-// Optional: catch-all 404 for unknown API routes
-app.use('/api/*', (req, res) => {
-    res.status(404).json({ error: 'API route not found' });
-});
-
-// Optional: catch-all 404 for other routes not in /public
-app.use((req, res) => {
-    res.status(404).send('Page not found');
-});
 
 
 app.listen(PORT, HOST, () => {
